@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.TechStory.eCommerce</groupId>
+    <artifactId>eCommerce_Project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>eCommerce_Project</name>
+    <url>http://maven.apache.org</url>
+    <repositories>
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+</repositories>
+    <dependencies>
+        <!-- Selenium WebDriver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.5.0</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- TestNG (For Parallel Execution, Assertions, etc.) -->
+        <dependency>       
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version> <!-- Check for the latest version -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ExtentReports (For Reporting) -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>4.1.6</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- Apache POI (For Excel Data Handling) -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version> <!-- Check for the latest version -->
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- Apache Commons IO (For File Operations like Screenshot Saving) -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- WebDriverManager (For Automatic WebDriver Management) -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.3.0</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.14.1</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- Logging implementation -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version> <!-- Check for the latest version -->
+        </dependency>
+   
+    </dependencies>
+    
+    
+
+    <build>
+        <plugins>
+            <!-- Surefire Plugin for running TestNG tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
+            
+               <!-- Compiler plugin to set Java version -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version> <!-- or later version -->
+            <configuration>
+                <source>11</source>   <!-- or 11 or later if you're using Java 11 or higher -->
+                <target>11</target>   <!-- or 11 or later -->
+            </configuration>
+        </plugin>
+        </plugins>
+    </build>
+
+</project>

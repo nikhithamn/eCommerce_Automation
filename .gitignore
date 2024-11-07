@@ -1,0 +1,18 @@
+# Eclipse project files
+.project
+.classpath
+.settings/
+
+# Eclipse-specific build files
+bin/
+target/
+
+# Eclipse metadata folder (workspace settings)
+.metadata/
+
+# Mac-specific files
+.DS_Store
+
+# Other Eclipse-related files
+*.log
+test-output/

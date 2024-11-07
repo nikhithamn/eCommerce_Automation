@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Selenium Suite" parallel="tests" thread-count="2">
+
+
+    <!-- Test 2: Run tests with Safari browser -->
+    <test name="RegressionTest-Safari">
+        <parameter name="browser" value="chrome"/>  <!-- Pass Safari browser -->
+        <classes>
+            <class name="com.TechStory.eCommerce.eCommerce_Project.RegressionTest"/>
+        </classes>
+    </test>
+</suite>
