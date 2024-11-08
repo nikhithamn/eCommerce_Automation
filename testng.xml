@@ -5,9 +5,10 @@
 
     <!-- Test 2: Run tests with Safari browser -->
     <test name="RegressionTest-Safari">
-        <parameter name="browser" value="chrome"/>  <!-- Pass Safari browser -->
+        <parameter name="browser" value="safari"/>  <!-- Pass Safari browser -->
         <classes>
             <class name="com.TechStory.eCommerce.eCommerce_Project.RegressionTest"/>
         </classes>
     </test>
+    
 </suite>

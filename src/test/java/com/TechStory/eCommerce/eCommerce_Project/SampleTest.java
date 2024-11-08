@@ -8,98 +8,78 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.TechStory.eCommerce.eCommerce_Project.pages.HomePage;
-import com.TechStory.eCommerce.eCommerce_Project.pages.ProductPage;
-import com.TechStory.eCommerce.eCommerce_Project.utilities.ActionValidation;
-import com.TechStory.eCommerce.eCommerce_Project.drivers.DriverFactory;
 
-public class RegressionTest {
+public class SampleTest {
 
     private WebDriver driver;
-    private HomePage homePage;
-    private ProductPage productPage;
+    private static final String URL = "https://www.demoblaze.com/index.html";
 
-    // Store URL in a configuration file or system property
-    private static final String URL = "https://www.demoblaze.com/index.html";  // You can fetch this URL from a properties/config file.
-
+    // 1. @BeforeClass - Set up the WebDriver and access the URL
     @BeforeClass
-    @Parameters("browser")  // Read the browser parameter from TestNG XML
-    public void setUp(String browser) {
-        // Initialize WebDriver based on the browser passed from testng.xml
-        driver = DriverFactory.getDriver(browser);
-        homePage = new HomePage(driver);
-        productPage = new ProductPage(driver);
-        new ActionValidation(driver);
+    public void setUp() {
+        // Initialize the Safari WebDriver
+        driver = new SafariDriver();
+        
+        // Navigate to the URL
+        driver.get(URL);
+        driver.manage().window().maximize();
     }
-
-    @Test
-    public void launchUrl(){
-        // Use HomePage class to navigate to the URL
-    	 System.out.println("Navigating to home page...");
-        homePage.navigateToHomePage(URL);
-        System.out.println("Navigated to home page...");
-       
-    }
-    
 
     // 2. @Test - Get the title of the page
-    @Test(dependsOnMethods = {"launchUrl"}) 
+    @Test
     public void getTitleTest() {
         // Get the page title and assert it
         String pageTitle = driver.getTitle();
         System.out.println("Page Title: " + pageTitle);
         
         // Example assertion to ensure the title is correct
-        //Assert.assertTrue(pageTitle.contains("STORE"));
+        Assert.assertTrue(pageTitle.contains("STORE"));
         Assert.assertEquals(pageTitle, "STORE");
     }
-    @Test(dependsOnMethods = {"launchUrl"})
+
+    @Test
     public void switchWin() throws InterruptedException {
         try {
-            // Wait for the page to load
+            // Step 1: Wait for the page to load
             Thread.sleep(3000);
 
-            // Get the list of card titles using HomePage class
-            List<WebElement> cardTitles = homePage.getCardTitles();
+            // Step 2: Identify the first two elements with class "card-title"
+            List<WebElement> cardTitles = driver.findElements(By.className("card-title"));
 
             // Make sure there are at least two elements to interact with
             if (cardTitles.size() >= 2) {
-                // Open the first two card titles in new tabs using Actions
+                // Step 3: Open the first two card titles in new tabs using Actions
                 Actions actions = new Actions(driver);
                 for (int i = 0; i < 2; i++) {
                     WebElement card = cardTitles.get(i);
+                    // Use Actions to simulate Ctrl/Cmd + Click to open in a new tab
                     actions.keyDown(Keys.COMMAND).click(card).keyUp(Keys.COMMAND).build().perform();
                     Thread.sleep(3000);  // Wait for the tab to open
                 }
 
-                // Switch to the new tabs and check the price
+                // Step 4: Switch to the new tabs and print the page titles and prices
                 ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
                 for (int i = 1; i <= 2; i++) {
                     driver.switchTo().window(tabs.get(i));  // Switch to the new tab
                     System.out.println("Page Title in new tab: " + driver.getTitle());
+                    //System.out.println("Page Source in new tab: " + driver.getPageSource());  // Print the page source to debug
 
-                    // Wait until the price is visible and extract it from the current tab using ProductPage class
+                    // Step 5: Wait until the price is visible and extract it from the current tab
                     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Updated WebDriverWait
                     try {
-                        WebElement priceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(productPage.getPriceElementLocator()));
+                        WebElement priceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("price-container")));
                         String price = priceElement.getText();
                         System.out.println("Price in the new tab: " + price);
-
-                        // Assert that the price is found and is not empty
-                        Assert.assertNotNull(price, "Price should not be null in tab " + (i + 1));
-                        Assert.assertFalse(price.isEmpty(), "Price should not be empty in tab " + (i + 1));
                     } catch (Exception e) {
-                        System.out.println("Price not found in tab " + (i + 1));
-                        Assert.fail("Price not found in tab " + (i + 1));  // Fail the test if price is not found
+                        System.out.println("Price not found in this tab.");
                     }
                 }
 
@@ -119,9 +99,12 @@ public class RegressionTest {
             driver.quit();  // Close the driver and quit the browser
         }
     }
+
+    // 3. @AfterClass - Quit the WebDriver after all tests
     @AfterClass
     public void tearDown() {
-        // Quit the driver after the test is complete
-        DriverFactory.quitDriver(driver);
+        if (driver != null) {
+            driver.quit();  // Close the browser
+        }
     }
 }

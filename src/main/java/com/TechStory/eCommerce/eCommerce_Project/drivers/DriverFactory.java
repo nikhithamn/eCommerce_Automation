@@ -1,5 +1,7 @@
 package com.TechStory.eCommerce.eCommerce_Project.drivers;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -23,16 +25,18 @@ public class DriverFactory {
         WebDriver driver = null;
 
         if ("chrome".equalsIgnoreCase(browser)) {
+        	  System.out.println("WebDriverManagerone Cache Path: " + WebDriverManager.chromedriver().getDownloadedDriverPath());
             // Automatically fetch and setup the correct version of chromedriver using WebDriverManager
-            WebDriverManager.chromedriver(). driverVersion("130.0.6723.92").setup();
+            WebDriverManager.chromedriver().setup();
+            System.out.println("WebDriverManagertwo Cache Path: " + WebDriverManager.chromedriver().getDownloadedDriverPath());
         	//WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--disable-gpu");
             options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");  // Recommended for Docker or low-resource environments
-            options.addArguments("--incognito"); // Start Chrome in incognito mode
+         
             options.addArguments("--disable-extensions"); // Disable extensions
              driver = new ChromeDriver(options);
+         
             //driver = new ChromeDriver();
         } else if ("firefox".equalsIgnoreCase(browser)) {
             // Automatically fetch and setup the correct version of geckodriver using WebDriverManager
@@ -45,7 +49,11 @@ public class DriverFactory {
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
-
+        
+     
+ 
+        // Add any other global configurations (timeouts, implicit waits, etc.)
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
 
