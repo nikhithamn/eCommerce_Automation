@@ -14,7 +14,7 @@ public class ProductPage {
     private By priceContainerLocator = By.className("price-container");
 
     // Locator for "Add to cart" button
-    private By addToCartButtonLocator = By.className("btn btn-success btn-lg");
+    private By addToCartButtonLocator = By.cssSelector("a.btn.btn-success btn-lg");
 
     // Locator for the "OK" button on the pop-up
     private By okButtonLocator = By.xpath("//button[text()='OK']");
@@ -35,17 +35,17 @@ public class ProductPage {
         return priceElement.getText();
     }
 
-//    // Method to click the "Add to Cart" button
-//    public void clickAddToCart() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement addToCartButton = wait.until(ExpectedConditions.elementToBeClickable(addToCartButtonLocator));
-//        addToCartButton.click();
-//    }
-//
-//    // Method to handle the pop-up and click the "OK" button
-//    public void handlePopUp() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(okButtonLocator));
-//        okButton.click();
-//    }
+    // Method to click the "Add to Cart" button
+    public void clickAddToCart() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement addToCartButton = wait.until(ExpectedConditions.elementToBeClickable(addToCartButtonLocator));
+        addToCartButton.click();
+    }
+
+    // Method to handle the pop-up and click the "OK" button
+    public void handlePopUp() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(okButtonLocator));
+        okButton.click();
+    }
 }
