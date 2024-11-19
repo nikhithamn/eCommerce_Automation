@@ -44,7 +44,7 @@ public class DriverFactory {
             driver = new FirefoxDriver();
         } else if ("safari".equalsIgnoreCase(browser)) {
             // Safari driver does not need an external driver to be set up in the same way as Chrome or Firefox
-            // You must have Safari's driver already available (on macOS, it's built into the system)
+            // Must have Safari's driver already available (on macOS, it's built into the system)
             driver = new SafariDriver();
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
